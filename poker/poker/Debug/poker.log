@@ -1,0 +1,79 @@
+﻿Сборка начата 05.10.2014 16:21:02.
+     1>Проект "C:\Users\Администратор\Desktop\Labs\poker\poker\poker.vcxproj" в узле 2 (целевые объекты Build).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt RealPlayer.cpp aiplayer.cpp card.cpp deck.cpp game.cpp main.cpp player.cpp tehasholdem.cpp
+         RealPlayer.cpp
+         Создание кода...
+         Компиляция...
+         tehasholdem.cpp
+     1>c:\program files (x86)\microsoft visual studio 12.0\vc\include\xmemory0(593): error C2259: Player: невозможно создать экземпляр абстрактного класса
+                 из-за следующих членов:
+                 int Player::run(int): абстрактный
+                 c:\users\администратор\desktop\labs\poker\poker\player.h(21): см. объявление "Player::run"
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\xmemory0(592): при компиляции функции-члена "void std::allocator<_Ty>::construct(_Ty *,const _Ty &)" класса шаблон
+                 with
+                 [
+                     _Ty=Player
+                 ]
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\xmemory0(723): см. ссылку на создание экземпляров функции шаблон при компиляции "void std::allocator<_Ty>::construct(_Ty *,const _Ty &)"
+                 with
+                 [
+                     _Ty=Player
+                 ]
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\type_traits(572): см. ссылку на создание экземпляров класса шаблон при компиляции "std::allocator<_Ty>"
+                 with
+                 [
+                     _Ty=Player
+                 ]
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\vector(650): см. ссылку на создание экземпляров класса шаблон при компиляции "std::is_empty<_Alloc>"
+                 with
+                 [
+                     _Alloc=std::allocator<Player>
+                 ]
+                 c:\users\администратор\desktop\labs\poker\poker\game.h(10): см. ссылку на создание экземпляров класса шаблон при компиляции "std::vector<Player,std::allocator<_Ty>>"
+                 with
+                 [
+                     _Ty=Player
+                 ]
+         player.cpp
+         main.cpp
+     1>c:\program files (x86)\microsoft visual studio 12.0\vc\include\xmemory0(593): error C2259: Player: невозможно создать экземпляр абстрактного класса
+                 из-за следующих членов:
+                 int Player::run(int): абстрактный
+                 c:\users\администратор\desktop\labs\poker\poker\player.h(21): см. объявление "Player::run"
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\xmemory0(592): при компиляции функции-члена "void std::allocator<_Ty>::construct(_Ty *,const _Ty &)" класса шаблон
+                 with
+                 [
+                     _Ty=Player
+                 ]
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\xmemory0(723): см. ссылку на создание экземпляров функции шаблон при компиляции "void std::allocator<_Ty>::construct(_Ty *,const _Ty &)"
+                 with
+                 [
+                     _Ty=Player
+                 ]
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\type_traits(572): см. ссылку на создание экземпляров класса шаблон при компиляции "std::allocator<_Ty>"
+                 with
+                 [
+                     _Ty=Player
+                 ]
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\vector(650): см. ссылку на создание экземпляров класса шаблон при компиляции "std::is_empty<_Alloc>"
+                 with
+                 [
+                     _Alloc=std::allocator<Player>
+                 ]
+                 c:\users\администратор\desktop\labs\poker\poker\game.h(10): см. ссылку на создание экземпляров класса шаблон при компиляции "std::vector<Player,std::allocator<_Ty>>"
+                 with
+                 [
+                     _Ty=Player
+                 ]
+         game.cpp
+         aiplayer.cpp
+         Создание кода...
+         Пропуск... (изменения не обнаружены)
+         deck.cpp
+         card.cpp
+     1>Сборка проекта "C:\Users\Администратор\Desktop\Labs\poker\poker\poker.vcxproj" завершена (целевые объекты Build) с ошибкой.
+
+Ошибка сборки.
+
+Затраченное время: 00:00:09.73
