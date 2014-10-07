@@ -71,6 +71,7 @@
     <ClInclude Include="player.h" />
     <ClInclude Include="RealPlayer.h" />
     <ClInclude Include="tehasholdem.h" />
+    <ClInclude Include="userInterface.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="aiplayer.cpp" />

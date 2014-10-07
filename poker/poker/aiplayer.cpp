@@ -1,4 +1,5 @@
 #include "AIPlayer.h"
+#include <iostream>
 AIPlayer::AIPlayer() {
 	money = 0;
 	playerName = "Default AI name";
@@ -10,6 +11,6 @@ AIPlayer::AIPlayer(std::string nm, int m) {
 }
 
 int AIPlayer::run(int nowBet) {
-	bet(nowBet);
-	return 0;
+	std::cout << "Money:" << money << std::endl;
+	return nowBet;
 }

@@ -18,13 +18,12 @@ protected:
 public:
 	Player();
 	Player(std::string, int);
-	virtual int run(int) = 0; // Return 0, if player check; >0 - player raise bid on this value; -1 - if player fold.
-
+	virtual int run(int) = 0; //You must return your current bid.If you want "check" return nowBet, "raise" - greater then nowBid, and "fold" in other cases.
+	void bet(int); // TODO: Move to private for anticheating
 	std::string name() const;
 	void getCard(Deck&);
 	//std::vector<Card> lookCards() const;
 	void openCard(Card&);
-	void bet(int); // 
 	int bid() const;
 };
 

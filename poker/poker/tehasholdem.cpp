@@ -1,37 +1,47 @@
 #include "tehasholdem.h"
-int bigBlind, smallBlind, nowBet, allCash;
 #include <iostream>
+int bigBlind, smallBlind, nowBet, allCash, bound;
 
-void TehasHoldem::trade(int index, std::vector<Player> & playersRound, std::vector<bool> & fold) {
-	int bound = bigBlind;
+void TehasHoldem::trade(int index, std::vector<bool> & fold) {
+	bool flag = false;
+	if (bound == index) {
+		flag = true;
+		bound++;
+	}
 	while (index != bound) {
-		if (index == playersRound.size()) index = 0;
+		if (index == (int)players.size()) index = 0;
+		if (flag) {
+			bound--;
+			flag = false;
+		}
 		if (fold[index]) {
 			index++;
 			continue;
 		}
-		int bidOld = playersRound[index].bid();
-		int k = stepPlayer(playersRound[index], nowBet);
+		std::cout << players[index]->name() << " thinking..." << std::endl;
+		int bidOld = players[index]->bid();
+		int k = stepPlayer(players[index], nowBet);
 		if (k == 0) {
+			std::cout << players[index]->name() << " check" << std::endl;
 			allCash += nowBet - bidOld;
-		}
+		} else
 		if (k > 0) {
+			
 			bound = index;
 			nowBet += k;
 			allCash += nowBet - bidOld;
-		}
+			std::cout << players[index]->name() << " bet " << nowBet << std::endl;
+		} else
 		if (k == -1) {
+			std::cout << players[index]->name() << " fold:(" << std::endl;
 			fold[index] = true;
 		}
 		index++;
+		if (index == (int)players.size()) index = 0;
 	}
-	bigBlind++;
-	if (bigBlind == countPlayers) bigBlind = 0;
-	smallBlind++;
-	if (smallBlind == countPlayers) smallBlind = 0;
 }
 
-std::pair<int, int> TehasHoldem::maxCombination(Player & player, std::vector<Card> & openCards) const{
+std::pair<int, int> TehasHoldem::maxCombination(Player * player, std::vector<Card> & openCards) const{
 	std::vector<Card> all = openCards;
 	all.push_back(lookCards(player)[0]);
 	all.push_back(lookCards(player)[1]);
@@ -52,78 +62,94 @@ std::pair<int, int> TehasHoldem::maxCombination(Player & player, std::vector<Car
 				usedIn[j] = true;
 			}
 		}
-		highCard = std::max(highCard, all[i].look().second);
+		if (highCard < all[i].look().second)
+			highCard = all[i].look().second;
 		if (search.size() > 1) {
 			for (size_t i = 0; i < usedIn.size(); i++)
 				used[i] = usedIn[i];
 			allComb.push_back(search);
 		}
-		pair = std::max(pair, (int)search.size());
+		if (pair < (int)search.size()) {
+			pair = (int)search.size();
+		}
 	}
 	return std::make_pair(1, highCard);
 }
 
 
-std::vector<Player> TehasHoldem::playRound() {
-	int count = countPlayers;
+std::vector<int> TehasHoldem::playRound() {
+	//int count = countPlayers;
 	nowBet = 20;
-	smallBlind = 0;
-	bigBlind = 1;
 	allCash = 30;
-	std::vector<Player> playersRound = players;
-	std::vector<bool> fold(playersRound.size(), false);
+	bound = bigBlind;
+	std::vector<bool> fold(players.size(), false);
 	std::vector<Card> openCards;
 
-	for (size_t i = 0; i < playersRound.size(); i++) {
-		playersRound[i].getCard(deck);
-		playersRound[i].getCard(deck);
+	for (size_t i = 0; i < players.size(); i++) {
+		players[i]->getCard(deck);
+		players[i]->getCard(deck);
 	}
-	playersRound[smallBlind].bet(10);
-	playersRound[bigBlind].bet(20);
-	trade(bigBlind + 1, playersRound, fold);
+
+	players[smallBlind]->bet(10);
+	players[bigBlind]->bet(20);
+	trade(bound + 1, fold);
 	for (int i = 0; i < 3; i++) {
 		openCards.push_back(deck.get());
 		openCards.back().open();
 	}
-	trade(bigBlind + 1, playersRound, fold);
+//	paintOpenCards(openCards);
+	trade(bound, fold);
 	openCards.push_back(deck.get());
 	openCards.back().open(); 
-	trade(bigBlind + 1, playersRound, fold);
+	trade(bound, fold);
 	openCards.push_back(deck.get());
 	openCards.back().open(); 
-	trade(bigBlind + 1, playersRound, fold);
+	trade(bound, fold);
 	
 	std::vector<std::pair<int, int> > results;
-	for (size_t i = 0; i < playersRound.size(); i++) {
-		if (fold[i]) continue;
-		//openCards += lookCards(playersRound[i]);
-		std::pair<int, int> result = maxCombination(playersRound[i], openCards);
+	for (size_t i = 0; i < players.size(); i++) {
+		std::pair<int, int> result;
+		if (fold[i])
+			result = std::make_pair(-1, -1);
+		else 
+			result = maxCombination(players[i], openCards);
 		results.push_back(result);
 	}
-	std::vector<Player> winners;
+	std::vector<int> winners;
 	auto bestCombination = std::max_element(results.begin(), results.end());
-	for (size_t i = 0; i < playersRound.size(); i++)
-		if (results[i] == *bestCombination)
-			winners.push_back(playersRound[i]);
+	for (size_t i = 0; i < players.size(); i++)
+		if (results[i] == *bestCombination) {
+			std::cout << players[i]->name() << " win this round!" << std::endl;
+			winners.push_back(i);
+		}
+	bigBlind++;
+	if (bigBlind == (int)players.size()) bigBlind = 0;
+	smallBlind++;
+	if (smallBlind == (int)players.size()) smallBlind = 0;
 	return winners;
 }
 
-void TehasHoldem::runGame(std::vector<Player> playersAll) {
+void TehasHoldem::runGame(std::vector<Player*> playersAll) {
 	deck = Deck(52);
+	deck.shuffle();
 	players = playersAll;
 
 	for (size_t i = 0; i < players.size(); i++)
 		addMoney(players[i], 2000);
-
+	smallBlind = 0;
+	bigBlind = 1;
 	while (players.size() != 1) {
-		std::vector<Player> winners = playRound();
+		std::vector<int> winners = playRound();
 		for (size_t i = 0; i < winners.size(); i++)
-			addMoney(winners[i],(int) (allCash / winners.size()));
-		for (auto it = players.begin(); it != players.end(); it++)
-			if (money(*it) <= 0) {
-				auto newIt = it;
-				players.erase(newIt);
+			addMoney(players[winners[i]], (int)(allCash / winners.size()));
+		for (auto it = players.begin(); it != players.end();)
+			if (money((*it)) <= 0) {
+				it = players.erase(it);
+			}
+			else {
+				nullBid(*it);
+				it++;
 			}
 	}
-	std::cout << "Player " << players[0].name() << " winner!" << std::endl;
+	std::cout << "Player " << players[0]->name() << " winner!" << std::endl;
 }
