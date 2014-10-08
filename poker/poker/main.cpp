@@ -10,5 +10,7 @@ int main() {
 	pl.push_back(I);
 	pl.push_back(ai);
 	game.runGame(pl);
+	delete I;
+	delete ai;
 	return 0;
 }
