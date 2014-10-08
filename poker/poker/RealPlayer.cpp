@@ -4,15 +4,13 @@ RealPlayer::RealPlayer() : Player() {}
 
 RealPlayer::RealPlayer(std::string name, int m) : Player(name, m) {}
 
-int RealPlayer::run(int nowBet) {
+int RealPlayer::run(int nowBet) const {
 	for (;;) {
 		std::cout << playerName <<", if you want to see your card?(l). Check, raise or fold?(c/r/f)" << std::endl;
 		std::string str;
 		std::cin >> str;
 		if (str == "l") {
-			//uInterface.paintCards(cards);
-			//std::cout << "SUIT:" << cards[0].look().first << cards[0].look().second << std::endl;
-			//std::cout << "Money:" << money << std::endl;
+			uInterface.paintCards(cards);
 		} else
 		if (str == "c") {
 			return nowBet;

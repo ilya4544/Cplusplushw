@@ -3,7 +3,7 @@
 #include "player.h"
 
 class AIPlayer : public Player {
-	int run(int);
+	int run(int) const;
 public:
 	AIPlayer();
 	AIPlayer(std::string, int);

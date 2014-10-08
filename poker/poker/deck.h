@@ -1,7 +1,6 @@
 #ifndef DECK_H
 #define DECK_H
 #include <vector>
-#include <algorithm>
 #include <ctime>
 #include "card.h"
 class Card;

@@ -7,7 +7,6 @@ class TehasHoldem : public Game {
 	std::vector<int> playRound();
 	std::pair<int, int> maxCombination(Player * player, std::vector<Card> & openCards) const;
 public:
-//	TehasHoldem() = default;
 	void runGame(std::vector<Player*>);
 };
 

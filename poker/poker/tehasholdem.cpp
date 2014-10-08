@@ -1,6 +1,4 @@
 #include "tehasholdem.h"
-#include <iostream>
-#include <algorithm>
 int bigBlind, smallBlind, nowBet, allCash, bound;
 
 void TehasHoldem::trade(int index, std::vector<bool> & fold) {
@@ -190,12 +188,12 @@ std::vector<int> TehasHoldem::playRound() {
 	std::vector<Card> openCards;
 
 	for (size_t i = 0; i < players.size(); i++) {
-		players[i]->getCard(deck);
-		players[i]->getCard(deck);
+		getCard(players[i]);
+		getCard(players[i]);
 	}
 
-	players[smallBlind]->bet(10);
-	players[bigBlind]->bet(20);
+	bet(players[smallBlind],10);
+	bet(players[bigBlind], 20);
 	trade(bound + 1, fold);
 	for (int i = 0; i < 3; i++) {
 		openCards.push_back(deck.get());
@@ -244,7 +242,7 @@ void TehasHoldem::runGame(std::vector<Player*> playersAll) {
 		addMoney(players[i], 2000);
 	smallBlind = 0;
 	bigBlind = 1;
-	while (players.size() != 1) {
+	while (players.size() > 1) {
 		std::vector<int> winners = playRound();
 		for (size_t i = 0; i < winners.size(); i++)
 			addMoney(players[winners[i]], (int)(allCash / winners.size()));
@@ -253,9 +251,11 @@ void TehasHoldem::runGame(std::vector<Player*> playersAll) {
 				it = players.erase(it);
 			}
 			else {
+				clearCards(*it);
 				nullBid(*it);
 				it++;
 			}
 	}
 	std::cout << "Player " << players[0]->name() << " winner!" << std::endl;
+	system("pause");
 }

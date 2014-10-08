@@ -2,6 +2,8 @@
 #define USERINTERFACE_H
 #include "card.h"
 #include "Windows.h"
+#include <string>
+#include <vector>
 #include <iostream>
 
 enum ConsoleColor {
@@ -27,7 +29,7 @@ class UserInterface {
 	HANDLE hConsole;
 public:
 	UserInterface();
-	void paintCards(std::vector<Card> & openCards);
+	void paintCards(std::vector<Card> openCards) const;
 };
 
 #endif USERINTERFACE_H

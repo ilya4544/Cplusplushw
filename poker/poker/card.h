@@ -1,6 +1,6 @@
 #ifndef CARD_H
 #define CARD_H
-#include "player.h"
+#include <algorithm>
 
 enum State {
 	OPEN, CLOSE

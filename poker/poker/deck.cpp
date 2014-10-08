@@ -42,7 +42,7 @@ Card Deck::get() {
 }
 
 void Deck::shuffle() {
-	srand(time(0));
+	srand((int)time(0));
 	for (size_t i = 0; i < deck.size(); i++) {
 		std::swap(deck[i], deck[rand() % deck.size()]);
 	}
