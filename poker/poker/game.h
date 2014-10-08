@@ -7,12 +7,10 @@
 
 class Game {
 protected:
-	userInterface ui;
 	Deck deck;
+	UserInterface uInterface;
 	std::vector<Player*> players;
 	int countPlayers;
-	//virtual void initGame(int) = 0;
-	//virtual void addPlayer(Player) = 0;
 	std::vector<Card> lookCards(Player*) const;
 	void addMoney(Player *, int);
 	int money(Player *);

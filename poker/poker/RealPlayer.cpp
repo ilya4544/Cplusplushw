@@ -10,8 +10,9 @@ int RealPlayer::run(int nowBet) {
 		std::string str;
 		std::cin >> str;
 		if (str == "l") {
-			std::cout << "SUIT:" << cards[0].look().first << cards[0].look().second << std::endl;
-			std::cout << "Money:" << money << std::endl;
+			//uInterface.paintCards(cards);
+			//std::cout << "SUIT:" << cards[0].look().first << cards[0].look().second << std::endl;
+			//std::cout << "Money:" << money << std::endl;
 		} else
 		if (str == "c") {
 			return nowBet;

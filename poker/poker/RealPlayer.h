@@ -1,7 +1,7 @@
 #ifndef REALPLAYER_H
 #define REALPLAYER_H
 #include "player.h"
-#include <iostream>
+//#include <iostream>
 
 class RealPlayer : public Player {
 	int run(int);

@@ -1,5 +1,6 @@
 #include "tehasholdem.h"
 #include <iostream>
+#include <algorithm>
 int bigBlind, smallBlind, nowBet, allCash, bound;
 
 void TehasHoldem::trade(int index, std::vector<bool> & fold) {
@@ -41,44 +42,147 @@ void TehasHoldem::trade(int index, std::vector<bool> & fold) {
 	}
 }
 
+//Custom comparator to sort cards
+bool comparator(Card & left, Card & right) {
+	if (left.look().second == right.look().second)
+		return left.look().first < right.look().first;
+	return left.look().second < right.look().second;
+}
+
 std::pair<int, int> TehasHoldem::maxCombination(Player * player, std::vector<Card> & openCards) const{
 	std::vector<Card> all = openCards;
 	all.push_back(lookCards(player)[0]);
 	all.push_back(lookCards(player)[1]);
 	std::vector<std::vector<Card> > allComb;
-	std::vector<bool> used(7, false);
-	int pair = 1;
-	int highCard = 0;
-	for (size_t i = 0; i < all.size(); i++) {
-		if (used[i]) continue;
-		std::vector<Card> search;
-		std::vector<bool> usedIn(7, false);
-		search.push_back(all[i]);
-		usedIn[i] = true;
-		for (size_t j = 0; j < all.size(); j++) {
-			if (i == j) continue;
-			if (all[i].look().second == all[j].look().second) {
-				search.push_back(all[j]);
-				usedIn[j] = true;
+	std::sort(all.begin(), all.end(), comparator);
+	
+	int cntStrit = 0, cntFlesh = 0, highCard = all[0].look().second, cntPair = 0, indexPair = 0;
+	std::vector<int> flesh(4);
+	std::pair<int, int> highComb(0,0);
+	std::vector<int> suitPrev;
+	flesh[all[0].look().first]++;
+	for (size_t i = 1; i < all.size();i++) {
+		flesh[all[i].look().first]++; // Counting for flesh 
+
+		if (highCard < all[i].look().second) highCard = all[i].look().second; //Finding high card
+
+		if (all[i].look().second - all[i - 1].look().second == 1) { 
+			if (cntPair != 0) {
+				cntPair = 0;
+				indexPair++;
 			}
-		}
-		if (highCard < all[i].look().second)
-			highCard = all[i].look().second;
-		if (search.size() > 1) {
-			for (size_t i = 0; i < usedIn.size(); i++)
-				used[i] = usedIn[i];
-			allComb.push_back(search);
-		}
-		if (pair < (int)search.size()) {
-			pair = (int)search.size();
+			cntStrit++;
+			if (all[i].look().first == all[i - 1].look().first) 
+				cntFlesh++;
+			else {
+				bool flag = false;
+				for (auto it : suitPrev)
+					if (all[i].look().first == it) {
+						cntFlesh++;
+						flag = true;
+					}
+				if (!flag) cntFlesh = 0;
+			}
+			suitPrev.clear();
+		} else
+		if (all[i].look().second - all[i - 1].look().second == 0) { //Finding pair
+			if (cntPair != 0) {
+				allComb[indexPair].push_back(all[i]);
+				cntPair++;
+			}
+			else {
+				std::vector<Card> tmp;
+				tmp.push_back(all[i - 1]);
+				tmp.push_back(all[i]);
+				allComb.push_back(tmp);
+				cntPair = 2;
+			}
+			suitPrev.push_back(all[i - 1].look().first);
+		} else
+		if (all[i].look().second - all[i - 1].look().second > 1) {
+			if (cntPair != 0) {
+				cntPair = 0;
+				indexPair++;
+			}
+			if (cntStrit >= 4) {
+				if (cntFlesh >= 4) { //Strit-flesh
+					highComb.first = 9;
+					highComb.second = all[i].look().second;
+				}
+				else { //Strit
+					highComb.first = 5;
+					highComb.second = all[i].look().second;
+				}
+			}
+			cntStrit = 0;
+			cntFlesh = 0;
+			suitPrev.clear();
 		}
 	}
-	return std::make_pair(1, highCard);
+	if (cntStrit >= 4) {
+		if (cntFlesh >= 4) { // Strit-flesh
+			highComb.first = 9;
+			highComb.second = all.back().look().second;
+		}
+		else { // Strit
+			highComb.first = 5;
+			highComb.second = all.back().look().second;
+		}
+	}
+
+	// Check flesh
+	for (int i = 3; i >= 0; i--)
+		if (flesh[i] >= 5) {
+			if (highComb.first < 6) {
+				highComb.first = 6;
+				highComb.second = highCard;
+			}
+		}
+
+	for (int i = allComb.size() - 1; i >= 0; i--) {
+		if (allComb[i].size() == 4) { //Found care(4 card)
+			if (highComb.first < 8) { 
+				highComb.first = 8;
+				highComb.second = allComb[i][0].look().second;
+			}
+			break;
+		}
+		if (allComb[i].size() == 3) {
+			if (highComb.first < 4) {
+				if (highComb.first > 1) { // Was pair or two pairs + triple = full house
+					highComb.first = 7;
+					if (highComb.second < allComb[i][0].look().second) highComb.second = allComb[i][0].look().second;
+				}
+				else {
+					highComb.first = 4;
+					highComb.second = allComb[i][0].look().second;
+				}
+			}	
+		}
+		if (allComb[i].size() == 2) {
+			if (highComb.first == 4) { //Was triple + 1 pair = full house
+				highComb.first = 7;
+				if (highComb.second < allComb[i][0].look().second) highComb.second = allComb[i][0].look().second;
+			} else if (highComb.first == 2) { //Was 1 pair + 1 pair = two pairs
+				highComb.first = 3;
+				if (highComb.second < allComb[i][0].look().second) highComb.second = allComb[i][0].look().second;
+			} else if (highComb.first < 2) { //Nothing + 1 pair = 1 pair
+				highComb.first = 2;
+				highComb.second = allComb[i][0].look().second;
+			}
+		}
+	}
+
+	if (highComb.first == 0) { // If nothing, then high card
+		highComb.first = 1;
+		highComb.second = highCard;
+	}
+
+	return highComb;
 }
 
 
 std::vector<int> TehasHoldem::playRound() {
-	//int count = countPlayers;
 	nowBet = 20;
 	allCash = 30;
 	bound = bigBlind;
@@ -97,13 +201,15 @@ std::vector<int> TehasHoldem::playRound() {
 		openCards.push_back(deck.get());
 		openCards.back().open();
 	}
-//	paintOpenCards(openCards);
+	uInterface.paintCards(openCards);
 	trade(bound, fold);
 	openCards.push_back(deck.get());
 	openCards.back().open(); 
+	uInterface.paintCards(openCards);
 	trade(bound, fold);
 	openCards.push_back(deck.get());
 	openCards.back().open(); 
+	uInterface.paintCards(openCards);
 	trade(bound, fold);
 	
 	std::vector<std::pair<int, int> > results;

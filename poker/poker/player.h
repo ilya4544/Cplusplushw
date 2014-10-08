@@ -2,13 +2,16 @@
 #define PLAYER_H
 #include <vector>
 #include <string>
+#include <iostream>
 #include "card.h"
 #include "deck.h"
+//#include "userInterface.h"
 class Card;
 class Deck;
 
 class Player {
 protected:
+	//UserInterface uInterface;
 	std::vector<Card> cards;
 	int money;
 	int id;

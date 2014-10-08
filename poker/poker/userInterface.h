@@ -1,6 +1,6 @@
 #ifndef USERINTERFACE_H
 #define USERINTERFACE_H
-#include "game.h"
+#include "card.h"
 #include "Windows.h"
 #include <iostream>
 
@@ -23,32 +23,11 @@ enum ConsoleColor {
 	White = 15
 };
 
-class userInterface {
+class UserInterface {
 	HANDLE hConsole;
 public:
-	userInterface() {
-		hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	}
-	//void paintOpenCards(std::vector<Card> & openCards);
+	UserInterface();
+	void paintCards(std::vector<Card> & openCards);
 };
-/*
-void userInterface::paintOpenCards(std::vector<Card> & openCards) {
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	for (auto card : openCards) {
-		if (card.look().first == HEART || card.look().first == DIAMOND) {
-			SetConsoleTextAttribute(hConsole, (WORD)((White << 4) | Red));
-		}
-		else
-			SetConsoleTextAttribute(hConsole, (WORD)((White << 4) | Black));
-		std::cout << "*******" << std::endl;
-		for (int i = 0; i < 5; i++) {
-			if (i == 2)
-				std::cout << "*  " << card.look().second << "  *" << std::endl;
-			else
-				std::cout << "*      *" << std::endl;
-		}
-		std::cout << "*******" << std::endl;
-	}
-}*/
 
 #endif USERINTERFACE_H
