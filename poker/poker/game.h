@@ -8,11 +8,11 @@ protected:
 	UserInterface uInterface;
 	std::vector<Player*> players;
 	int countPlayers;
-	std::vector<Card> lookCards(Player*) const;
+	std::vector<Card>& lookCards(Player*) const;
 	void addMoney(Player *, int);
 	int money(Player *) const;
 	void kickPlayer(Player *);
-	int stepPlayer(Player *, int);
+	int stepPlayer(Player *, int, std::vector<Card>&);
 	void bet(Player *, int a);
 	void nullBid(Player * player);
 	void clearCards(Player * player);

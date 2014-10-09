@@ -3,7 +3,7 @@
 #include "player.h"
 
 class RealPlayer : public Player {
-	int run(int) const;
+	int run(int, std::vector<Card> &) const;
 public:
 	RealPlayer();
 	RealPlayer(std::string nm, int m);

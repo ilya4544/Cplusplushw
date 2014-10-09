@@ -10,7 +10,7 @@ AIPlayer::AIPlayer(std::string nm, int m) {
 	playerName = nm;
 }
 
-int AIPlayer::run(int nowBet) const {
+int AIPlayer::run(int nowBet, std::vector<Card> & openCards) const {
 	std::cout << "Money:" << money << std::endl;
 	return nowBet;
 }

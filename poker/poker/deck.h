@@ -8,11 +8,11 @@ class Card;
 class Deck {
 	std::vector<Card> deck;
 	void genFourSuit(int v);
-	void add(Card);
+	//void add(Card);
 public:
 	Deck() = default;
-	Deck(int);
-	Card get();
+	void generateCard(int);
+	void get(std::vector<Card> &);
 	void shuffle();
 };
 

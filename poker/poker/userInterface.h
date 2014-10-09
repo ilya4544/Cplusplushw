@@ -29,7 +29,7 @@ class UserInterface {
 	HANDLE hConsole;
 public:
 	UserInterface();
-	void paintCards(std::vector<Card> openCards) const;
+	void paintCards(std::vector<Card> & openCards) const;
 };
 
 #endif USERINTERFACE_H

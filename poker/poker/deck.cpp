@@ -1,17 +1,17 @@
 #include "deck.h"
 
-void Deck::add(Card card) {
-	deck.push_back(card);
-}
+//void Deck::add(Card card) {
+//	deck.push_back(card);
+//}
 
 void Deck::genFourSuit(int v) {
-	add(Card(CLUB, v));
-	add(Card(SPRADE, v));
-	add(Card(HEART, v));
-	add(Card(DIAMOND, v));
+	deck.push_back(std::move(Card(CLUB, v)));
+	deck.push_back(std::move(Card(SPRADE, v)));
+	deck.push_back(std::move(Card(HEART, v)));
+	deck.push_back(std::move(Card(DIAMOND, v)));
 }
 
-Deck::Deck(int a) {
+void Deck::generateCard(int a) {
 	if (a >= 24) {
 		genFourSuit(9);
 		genFourSuit(10);
@@ -35,15 +35,17 @@ Deck::Deck(int a) {
 	}
 }
 
-Card Deck::get() {
-	Card a = deck.back();
+void Deck::get(std::vector<Card> & cards) {
+	cards.push_back(std::move(deck[deck.size()-1]));
 	deck.pop_back();
-	return a;
 }
 
 void Deck::shuffle() {
 	srand((int)time(0));
 	for (size_t i = 0; i < deck.size(); i++) {
-		std::swap(deck[i], deck[rand() % deck.size()]);
+		int r = rand() % deck.size();
+		Card tmp = std::move(deck[i]);
+		deck[i] = std::move(deck[r]);
+		deck[r] = tmp;
 	}
 }

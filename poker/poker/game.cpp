@@ -1,6 +1,6 @@
 #include "game.h"
-int Game::stepPlayer(Player * player, int nowBid) {
-	int res = player->run(nowBid);
+int Game::stepPlayer(Player * player, int nowBid, std::vector<Card> & openCards) {
+	int res = player->run(nowBid, openCards);
 	if (res - nowBid > player->money)
 		return -1;
 	if (res == nowBid) {
@@ -21,12 +21,12 @@ void Game::clearCards(Player * player) {
 void Game::kickPlayer(Player * player) {
 	for (auto it = players.begin(); it != players.end(); it++)
 		if ((*it)->name() == player->name()) {
-			players.erase(it);
-			break;
+		players.erase(it);
+		break;
 		}
 }
 
-std::vector<Card> Game::lookCards(Player * player) const {
+std::vector<Card>& Game::lookCards(Player * player) const {
 	return player->cards;
 }
 
@@ -48,5 +48,5 @@ int Game::money(Player * player) const {
 }
 
 void Game::getCard(Player * player) {
-	player->cards.push_back(deck.get());
+	deck.get(player->cards);
 }

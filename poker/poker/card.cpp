@@ -11,6 +11,12 @@ std::pair<Suit, int> Card::look() const {
 	return std::make_pair(suit, value);
 }
 
+Card::Card(Card && other) {
+	value = std::move(other.value);
+	state = std::move(other.state);
+	suit = std::move(other.suit);
+}
+
 void Card::open() {
 	state = OPEN;
 }
@@ -18,4 +24,3 @@ void Card::open() {
 bool operator==(Card & a, Card & b) {
 	return (a.look() == b.look());
 }
-
