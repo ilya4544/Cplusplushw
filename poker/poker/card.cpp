@@ -6,7 +6,6 @@ Card::Card(Suit s, int v) {
 	state = CLOSE;
 }
 
-
 std::pair<Suit, int> Card::look() const {
 	return std::make_pair(suit, value);
 }

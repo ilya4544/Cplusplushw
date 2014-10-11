@@ -3,10 +3,10 @@
 #include "player.h"
 
 class RealPlayer : public Player {
-	int run(int, std::vector<Card> &) const;
+	int run(int) const;
 public:
 	RealPlayer();
-	RealPlayer(std::string nm, int m);
+	RealPlayer(std::string nm);
 };
 
 #endif REALPLAYER_H

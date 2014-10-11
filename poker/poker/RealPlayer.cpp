@@ -2,9 +2,9 @@
 
 RealPlayer::RealPlayer() : Player() {}
 
-RealPlayer::RealPlayer(std::string name, int m) : Player(name, m) {}
+RealPlayer::RealPlayer(std::string name) : Player(name) {}
 
-int RealPlayer::run(int nowBet, std::vector<Card> & openCards) const {
+int RealPlayer::run(int nowBet) const {
 	for (;;) {
 		std::cout << playerName << ", if you want to see your card?(l). Check, raise or fold?(c/r/f)" << std::endl;
 		std::string str;

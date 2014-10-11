@@ -4,8 +4,8 @@
 
 int main() {
 	TehasHoldem game;
-	RealPlayer* I = new RealPlayer("Ilya Lyamkin", 0);
-	AIPlayer* ai = new AIPlayer("Dummy AI", 0);
+	RealPlayer* I = new RealPlayer("Ilya Lyamkin");
+	AIPlayer* ai = new AIPlayer("Dummy AI");
 	std::vector<Player*> pl;
 	pl.push_back(I);
 	pl.push_back(ai);

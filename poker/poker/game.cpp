@@ -1,7 +1,7 @@
 #include "game.h"
-int Game::stepPlayer(Player * player, int nowBid, std::vector<Card> & openCards) {
-	int res = player->run(nowBid, openCards);
-	if (res - nowBid > player->money)
+int Game::stepPlayer(Player * player, int nowBid) {
+	int res = player->run(nowBid);
+	if (res - nowBid > player->wallet.money)
 		return -1;
 	if (res == nowBid) {
 		bet(player, nowBid);
@@ -31,22 +31,34 @@ std::vector<Card>& Game::lookCards(Player * player) const {
 }
 
 void Game::bet(Player * player, int a) {
-	player->money -= a - player->bidPlayer;
-	player->bidPlayer = a;
+	player->wallet.money -= a - player->wallet.bidPlayer;
+	player->wallet.bidPlayer = a;
 }
 
 void Game::nullBid(Player * player) {
-	player->bidPlayer = 0;
+	player->wallet.bidPlayer = 0;
 }
 
 void Game::addMoney(Player * player, int count) {
-	player->money += count;
+	player->wallet.money += count;
 }
 
 int Game::money(Player * player) const {
-	return player->money;
+	return player->wallet.money;
 }
 
 void Game::getCard(Player * player) {
-	deck.get(player->cards);
+	Deck::getInstance().get(player->cards);
+}
+
+void Game::getFromDeck(std::vector<Card> & to) {
+	Deck::getInstance().get(to);
+}
+
+void Game::generateCardDeck(int a) {
+	Deck::getInstance().generateCard(a);
+}
+
+void Game::shuffleDeck() {
+	Deck::getInstance().shuffle();
 }

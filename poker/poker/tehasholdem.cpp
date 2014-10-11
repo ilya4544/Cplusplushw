@@ -18,8 +18,8 @@ void TehasHoldem::trade(int index, std::vector<bool> & fold, std::vector<Card> &
 			continue;
 		}
 		std::cout << players[index]->name() << " thinking..." << std::endl;
-		int bidOld = players[index]->bid();
-		int k = stepPlayer(players[index], nowBet, openCards);
+		int bidOld = players[index]->bidPlay();
+		int k = stepPlayer(players[index], nowBet);
 		if (k == 0) {
 			std::cout << players[index]->name() << " check" << std::endl;
 			allCash += nowBet - bidOld;
@@ -204,16 +204,16 @@ std::vector<int> TehasHoldem::playRound() {
 	bet(players[bigBlind], 20);
 	trade(bound + 1, fold, openCards);
 	for (int i = 0; i < 3; i++) {
-		deck.get(openCards);
+		getFromDeck(openCards);
 		openCards.back().open();
 	}
 	uInterface.paintCards(openCards);
 	trade(bound, fold, openCards);
-	deck.get(openCards);
+	getFromDeck(openCards);
 	openCards.back().open();
 	uInterface.paintCards(openCards);
 	trade(bound, fold, openCards);
-	deck.get(openCards);
+	getFromDeck(openCards);
 	openCards.back().open();
 	uInterface.paintCards(openCards);
 	trade(bound, fold, openCards);
@@ -242,8 +242,8 @@ std::vector<int> TehasHoldem::playRound() {
 }
 
 void TehasHoldem::runGame(std::vector<Player*> playersAll) {
-	deck.generateCard(52);
-	deck.shuffle();
+	generateCardDeck(52);
+	shuffleDeck();
 	players = playersAll;
 
 	for (size_t i = 0; i < players.size(); i++)

@@ -15,11 +15,12 @@ class Card {
 	State state;
 	Suit suit;
 	int value;
-public:
+	Card(Suit s, int v);
 	Card() = default;
 	Card(const Card & other) = delete;
+	friend class Deck;
+public:
 	Card(Card && other);
-	Card(Suit s, int v);
 	std::pair<Suit, int> look() const;
 	void open();
 };

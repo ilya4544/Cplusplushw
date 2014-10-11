@@ -4,19 +4,23 @@
 
 class Game { // Has access to players functions. Player don't have it, because he want cheating.
 protected:
-	Deck deck;
 	UserInterface uInterface;
 	std::vector<Player*> players;
 	int countPlayers;
+
 	std::vector<Card>& lookCards(Player*) const;
 	void addMoney(Player *, int);
 	int money(Player *) const;
 	void kickPlayer(Player *);
-	int stepPlayer(Player *, int, std::vector<Card>&);
+	int stepPlayer(Player *, int);
 	void bet(Player *, int a);
 	void nullBid(Player * player);
 	void clearCards(Player * player);
 	void getCard(Player * player);
+
+	void getFromDeck(std::vector<Card> & to);
+	void generateCardDeck(int);
+	void shuffleDeck();
 public:
 	Game() = default;
 	virtual void runGame(std::vector<Player*>) = 0;

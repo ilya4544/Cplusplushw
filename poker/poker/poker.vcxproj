@@ -68,6 +68,7 @@
     <ClInclude Include="card.h" />
     <ClInclude Include="deck.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="Wallet.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="RealPlayer.h" />
     <ClInclude Include="tehasholdem.h" />
@@ -78,6 +79,7 @@
     <ClCompile Include="card.cpp" />
     <ClCompile Include="deck.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="Wallet.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="RealPlayer.cpp" />
