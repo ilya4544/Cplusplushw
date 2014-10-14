@@ -2,11 +2,12 @@
 #define AIPLAYER_H
 #include "player.h"
 
+//Implement AI players action 
 class AIPlayer : public Player {
 	int run(int) const;
 public:
-	AIPlayer();
-	AIPlayer(std::string);
+	AIPlayer(); // Default constructor
+	AIPlayer(std::string); // Constructor with name of the player
 };
 
-#endif
+#endif // !AIPLAYER_H

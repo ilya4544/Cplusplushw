@@ -1,6 +1,6 @@
 #include "deck.h"
 
-void Deck::genFourSuit(int v) {
+void Deck::genFourSuit(Value v) {
 	deck.emplace_back(std::move(Card(CLUB, v)));
 	deck.emplace_back(std::move(Card(SPRADE, v)));
 	deck.emplace_back(std::move(Card(HEART, v)));
@@ -9,25 +9,25 @@ void Deck::genFourSuit(int v) {
 
 void Deck::generateCard(int a) {
 	if (a >= 24) {
-		genFourSuit(9);
-		genFourSuit(10);
-		genFourSuit(14);
-		genFourSuit(11);
-		genFourSuit(12);
-		genFourSuit(13);
+		genFourSuit(Nine);
+		genFourSuit(Ten);
+		genFourSuit(Ace);
+		genFourSuit(Jack);
+		genFourSuit(Queen);
+		genFourSuit(King);
 	}
 	if (a >= 32) {
-		genFourSuit(7);
-		genFourSuit(8);
+		genFourSuit(Seven);
+		genFourSuit(Eight);
 	}
 	if (a >= 36) {
-		genFourSuit(6);
+		genFourSuit(Six);
 	}
 	if (a >= 52) {
-		genFourSuit(2);
-		genFourSuit(3);
-		genFourSuit(4);
-		genFourSuit(5);
+		genFourSuit(Two);
+		genFourSuit(Three);
+		genFourSuit(Four);
+		genFourSuit(Five);
 	}
 }
 
@@ -40,7 +40,6 @@ void Deck::shuffle() {
 	srand((int)time(0));
 	for (size_t i = 0; i < deck.size(); i++) {
 		int r = rand() % deck.size();
-//		std::move(deck[i], deck[r]);
 		Card tmp = std::move(deck[i]);
 		deck[i] = std::move(deck[r]);
 		deck[r] = tmp;

@@ -1,8 +1,8 @@
 #ifndef DECK_H
 #define DECK_H
-#include <vector>
-#include <ctime>
 #include <algorithm>
+#include <ctime>
+#include <vector>
 #include "card.h"
 class Card;
 
@@ -14,16 +14,16 @@ class Deck {
 
 	std::vector<Card> deck;
 
-	void genFourSuit(int v);
+	void genFourSuit(Value v);
 	void generateCard(int);
 	void get(std::vector<Card> &);
 	void shuffle();
 	friend class Game;
 public:
-	static Deck& getInstance() {
+	static Deck& getInstance() { // Return an instance of deck
 		static Deck instance;
 		return instance;
 	}
 };
 
-#endif DECK_H
+#endif // !DECK_H

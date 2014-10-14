@@ -1,10 +1,10 @@
 #ifndef USERINTERFACE_H
 #define USERINTERFACE_H
-#include "card.h"
-#include "Windows.h"
+#include <iostream>
 #include <string>
 #include <vector>
-#include <iostream>
+#include "Windows.h"
+#include "card.h"
 
 enum ConsoleColor {
 	Black = 0,
@@ -25,11 +25,12 @@ enum ConsoleColor {
 	White = 15
 };
 
+// Implement interaction with console(UI)
 class UserInterface {
 	HANDLE hConsole;
 public:
-	UserInterface();
-	void paintCards(std::vector<Card> & openCards) const;
+	UserInterface(); // Default constructor
+	void paintCards(std::vector<Card> & openCards) const; // Paint cards on console
 };
 
-#endif USERINTERFACE_H
+#endif // !USERINTERFACE_H

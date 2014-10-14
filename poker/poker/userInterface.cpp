@@ -33,19 +33,19 @@ void UserInterface::paintCards(std::vector<Card> & openCards) const {
 		std::cout << s << s << s << s << s << s << s << s << std::endl;
 		char num;
 		switch (openCards[i].look().second) {
-		case 11:
+		case Jack:
 			num = 'J';
 			break;
-		case 12:
+		case Queen:
 			num = 'Q';
 			break;
-		case 13:
+		case King:
 			num = 'K';
 			break;
-		case 14:
+		case Ace:
 			num = 'A';
 			break;
-		case 10:
+		case Ten:
 			num = 'T';
 			break;
 		default:

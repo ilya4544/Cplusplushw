@@ -1,6 +1,6 @@
 #include "card.h"
 
-Card::Card(Suit s, int v) {
+Card::Card(Suit s, Value v) {
 	suit = s;
 	value = v;
 	state = CLOSE;

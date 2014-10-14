@@ -2,7 +2,8 @@
 #define GAME_H
 #include "player.h"
 
-class Game { // Has access to players functions. Player don't have it, because he want cheating.
+// Implement everything related to the game 
+class Game {
 protected:
 	UserInterface uInterface;
 	std::vector<Player*> players;
@@ -22,8 +23,8 @@ protected:
 	void generateCardDeck(int);
 	void shuffleDeck();
 public:
-	Game() = default;
-	virtual void runGame(std::vector<Player*>) = 0;
+	Game() = default; // Default constructor
+	virtual void runGame(std::vector<Player*>) = 0; // Start game with the players
 };
 
-#endif GAME_H
+#endif // !GAME_H
